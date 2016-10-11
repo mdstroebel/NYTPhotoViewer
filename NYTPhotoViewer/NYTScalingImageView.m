@@ -149,8 +149,15 @@
 #endif
         CGRect scrollViewFrame = self.bounds;
         
-        CGFloat scaleWidth = scrollViewFrame.size.width / self.imageView.image.size.width;
-        CGFloat scaleHeight = scrollViewFrame.size.height / self.imageView.image.size.height;
+        CGFloat imageWidth = self.imageView.image.size.width;
+        CGFloat imageHeight = self.imageView.image.size.height;
+        
+        // Prevent division by zero error (if the user has init'ed this object with a [UIImage new])
+        if (imageWidth == 0) { imageWidth = 1; }
+        if (imageHeight == 0) { imageHeight = 1; }
+        
+        CGFloat scaleWidth = scrollViewFrame.size.width / (imageWidth);
+        CGFloat scaleHeight = scrollViewFrame.size.height / (imageHeight);
         CGFloat minScale = MIN(scaleWidth, scaleHeight);
         
         self.minimumZoomScale = minScale;
