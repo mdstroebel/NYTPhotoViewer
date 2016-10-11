@@ -32,6 +32,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) NSData *imageData;
 
 /**
+ *  The URL of the image to display.
+ *
+ *  This property's value is used if there is no 'imageData' specified and obviously if this property is non-nil.
+ *
+ *  Note that the loading of this URL will happen asynchronously, and as such, the '-placeHolderImage' will be used
+    until the async task is completed and the image is updated. If there is no '-placeHolderImage' specified, then nothing will be shown.
+ */
+@property (nonatomic, readonly, nullable) NSString *imageURL;
+
+/**
  *  A placeholder image for display while the image is loading.
  *
  *  This property is used if and only if `-imageData` returns `nil`.

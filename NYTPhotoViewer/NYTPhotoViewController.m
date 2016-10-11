@@ -9,6 +9,7 @@
 #import "NYTPhotoViewController.h"
 #import "NYTPhoto.h"
 #import "NYTScalingImageView.h"
+#import "UIImageView+AFNetworking.h"
 
 #ifdef ANIMATED_GIF_SUPPORT
 #import <FLAnimatedImage/FLAnimatedImage.h>
@@ -97,6 +98,21 @@ NSString * const NYTPhotoViewControllerPhotoImageUpdatedNotification = @"NYTPhot
     
     if (photo.imageData) {
         _scalingImageView = [[NYTScalingImageView alloc] initWithImageData:photo.imageData frame:CGRectZero];
+    }
+    else if (photo.imageURL) {
+        _scalingImageView = [[NYTScalingImageView alloc] initWithFrame:CGRectZero];
+        
+        // Set the image view to load the image asynchronously using AFNetworking's convenience method
+        NSURL* imageURL = [[NSURL alloc] initWithString:photo.imageURL];
+        NSURLRequest* imageURLRequest = [[NSURLRequest alloc] initWithURL:imageURL];
+        [_scalingImageView.imageView setImageWithURLRequest:imageURLRequest
+                                           placeholderImage:photo.placeholderImage
+                                                    success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+            [_scalingImageView updateImage:image];
+        }
+                                                    failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
+            //TODO: Notify the user that the photo failed to load
+        }];
     }
     else {
         UIImage *photoImage = photo.image ?: photo.placeholderImage;
