@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.platform         = :ios, '8.0'
   s.requires_arc     = true
 
-  s.dependency 'AFNetworking', '3.1.0'
+  s.dependency 'AFNetworking', '2.6.3'
 
   s.subspec 'Core' do |ss|
     ss.ios.resource_bundle = { s.name => ['NYTPhotoViewer/NYTPhotoViewer.bundle/*'] }

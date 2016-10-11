@@ -18,7 +18,7 @@ target 'Example-Swift' do
 end
 
 target 'NYTPhotoViewer' do
-  pod 'AFNetworking', '3.1.0'
+  pod 'AFNetworking', '2.6.3'
 
   target 'NYTPhotoViewerTests' do
     inherit! :search_paths
