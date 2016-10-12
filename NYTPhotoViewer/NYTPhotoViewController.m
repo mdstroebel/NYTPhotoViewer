@@ -99,8 +99,16 @@ NSString * const NYTPhotoViewControllerPhotoImageUpdatedNotification = @"NYTPhot
     if (photo.imageData) {
         _scalingImageView = [[NYTScalingImageView alloc] initWithImageData:photo.imageData frame:CGRectZero];
     }
+    else if (photo.image) {
+        _scalingImageView = [[NYTScalingImageView alloc] initWithImage:photo.image frame:CGRectZero];
+    }
     else if (photo.imageURL) {
-        _scalingImageView = [[NYTScalingImageView alloc] initWithFrame:CGRectZero];
+        
+        if (photo.placeholderImage) {
+            _scalingImageView = [[NYTScalingImageView alloc] initWithImage:photo.placeholderImage frame:CGRectZero];
+        } else {
+            _scalingImageView = [[NYTScalingImageView alloc] initWithFrame:CGRectZero];
+        }
         
         // Set the image view to load the image asynchronously using AFNetworking's convenience method
         NSURL* imageURL = [[NSURL alloc] initWithString:photo.imageURL];
@@ -108,11 +116,11 @@ NSString * const NYTPhotoViewControllerPhotoImageUpdatedNotification = @"NYTPhot
         [_scalingImageView.imageView setImageWithURLRequest:imageURLRequest
                                            placeholderImage:photo.placeholderImage
                                                     success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
-            [_scalingImageView updateImage:image];
-        }
+                                                        [_scalingImageView updateImage:image];
+                                                    }
                                                     failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
-            //TODO: Notify the user that the photo failed to load
-        }];
+                                                        //TODO: Notify the user that the photo failed to load
+                                                    }];
     }
     else {
         UIImage *photoImage = photo.image ?: photo.placeholderImage;
@@ -124,9 +132,9 @@ NSString * const NYTPhotoViewControllerPhotoImageUpdatedNotification = @"NYTPhot
     }
     
     _scalingImageView.delegate = self;
-
+    
     _notificationCenter = notificationCenter;
-
+    
     [self setupGestureRecognizers];
 }
 

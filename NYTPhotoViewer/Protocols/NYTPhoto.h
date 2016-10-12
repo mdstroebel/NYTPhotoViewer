@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  The URL of the image to display.
  *
- *  This property's value is used if there is no 'imageData' specified and obviously if this property is non-nil.
+ *  This property's value is used if there is no 'imageData' specified and also no 'image' specified.
  *
  *  Note that the loading of this URL will happen asynchronously, and as such, the '-placeHolderImage' will be used
     until the async task is completed and the image is updated. If there is no '-placeHolderImage' specified, then nothing will be shown.
