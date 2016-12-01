@@ -160,6 +160,7 @@ static const CGFloat NYTPhotoCaptionViewVerticalMargin = 7.0;
     
     self.textView.attributedText = attributedLabelText;
     self.textView.textColor = [UIColor whiteColor];
+    self.textView.font = [UIFont systemFontOfSize:14.0];
 }
 
 @end
